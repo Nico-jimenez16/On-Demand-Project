@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  gateway:
+    build: ./Python-FastApi-ApiGateway/api_gateway
+    container_name: gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - request-service
+    networks:
+      - on_demand_net
+
+  request-service:
+    build: ./Python-FastApi-MicroservicioRequest/microservice:servicerequest
+    container_name: request-service
+    ports:
+      - "8003:8003"
+    networks:
+      - on_demand_net
+
+networks:
+  on_demand_net:
+    driver: bridge
